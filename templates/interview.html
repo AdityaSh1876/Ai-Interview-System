@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Interview</title>
+
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='style.css') }}"
+        />
+    </head>
+
+    <body>
+        <div class="interview-container">
+            <h1>Welcome, {{ name }} 👋</h1>
+
+            <div class="interview-grid">
+                <div class="question-card">
+                    <p>Question {{ q + 1 }} / {{ total }}</p>
+
+                    <div class="progress">
+                        <div
+                            class="progress-bar"
+                            style="width: {{ ((q + 1) / total) * 100 }}%;"
+                        ></div>
+                    </div>
+
+                    <h2>{{ question }}</h2>
+
+                    <div id="timer">60</div>
+
+                    <form action="/submit" method="POST">
+                        <input type="hidden" name="q" value="{{ q }}" />
+
+                        <textarea
+                            id="answer"
+                            name="answer"
+                            placeholder="Type your answer or use voice..."
+                            required
+                        ></textarea>
+
+                        <div class="buttons">
+                            <button type="button" onclick="startVoice()">
+                                🎤 Speak
+                            </button>
+
+                            <button type="submit">Next Question →</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="camera-card">
+                    <h2>🎥 Camera</h2>
+
+                    <video id="video" autoplay playsinline></video>
+
+                    <p id="camera-status">Camera starting...</p>
+                </div>
+            </div>
+        </div>
+
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+    </body>
+</html>
