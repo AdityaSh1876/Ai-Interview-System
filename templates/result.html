@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Interview Result</title>
+
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='style.css') }}"
+        />
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="result-card">
+                <h1>Interview Completed 🎉</h1>
+
+                <p>Thank you, {{ name }}</p>
+
+                <div class="score">{{ score }}%</div>
+
+                <h2>Interview Score</h2>
+
+                <hr />
+
+                <h2>Total Answers Submitted: {{ answers|length }}</h2>
+
+                {% for answer in answers %}
+
+                <div class="answer-result">
+                    <h3>Answer {{ loop.index }}</h3>
+
+                    <p>{{ answer }}</p>
+                </div>
+
+                {% endfor %}
+
+                <a href="/">
+                    <button>Start New Interview</button>
+                </a>
+            </div>
+        </div>
+    </body>
+</html>
