@@ -1,79 +1,235 @@
 const video = document.getElementById("video");
 
+const cameraStatus =
+    document.getElementById("camera-status");
+
+
 if (video) {
-    navigator.mediaDevices
-        .getUserMedia({
-            video: true,
-            audio: false,
-        })
-        .then(function (stream) {
-            video.srcObject = stream;
 
-            document.getElementById("camera-status").innerText = "Camera is ON";
-        })
-        .catch(function (error) {
-            document.getElementById("camera-status").innerText =
-                "Camera permission denied";
+    if (
+        navigator.mediaDevices &&
+        navigator.mediaDevices.getUserMedia
+    ) {
 
-            console.log(error);
-        });
+        navigator.mediaDevices
+            .getUserMedia({
+                video: true,
+                audio: false
+            })
+
+            .then(function(stream) {
+
+                video.srcObject = stream;
+
+                if (cameraStatus) {
+
+                    cameraStatus.innerText =
+                        "Camera is ON ✅";
+
+                }
+
+            })
+
+            .catch(function(error) {
+
+                if (cameraStatus) {
+
+                    cameraStatus.innerText =
+                        "Camera permission denied ❌";
+
+                }
+
+                console.log(
+                    "Camera error:",
+                    error
+                );
+
+            });
+
+    }
+
 }
 
 function startVoice() {
+
     const SpeechRecognition =
-        window.SpeechRecognition || window.webkitSpeechRecognition;
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
 
     if (!SpeechRecognition) {
-        alert("Speech recognition is not supported in this browser.");
+
+        alert(
+            "Speech recognition is not supported by this browser."
+        );
 
         return;
+
     }
 
-    const recognition = new SpeechRecognition();
 
-    recognition.lang = "en-US";
+    const recognition =
+        new SpeechRecognition();
 
-    recognition.interimResults = false;
 
-    recognition.continuous = false;
+    recognition.lang =
+        "en-US";
 
-    recognition.onstart = function () {
-        console.log("Listening...");
-    };
 
-    recognition.onresult = function (event) {
-        const text = event.results[0][0].transcript;
+    recognition.interimResults =
+        false;
 
-        document.getElementById("answer").value += text + " ";
-    };
 
-    recognition.onerror = function (event) {
-        console.log("Speech error:", event.error);
-    };
+    recognition.continuous =
+        false;
+
+
+    const button =
+        document.getElementById(
+            "voice-button"
+        );
+
+
+    recognition.onstart =
+        function() {
+
+            if (button) {
+
+                button.innerText =
+                    "🎤 Listening...";
+
+            }
+
+        };
+
+
+    recognition.onresult =
+        function(event) {
+
+            const text =
+                event
+                    .results[0][0]
+                    .transcript;
+
+
+            const answer =
+                document.getElementById(
+                    "answer"
+                );
+
+
+            if (answer) {
+
+                if (answer.value.trim() !== "") {
+
+                    answer.value +=
+                        " " + text;
+
+                } else {
+
+                    answer.value =
+                        text;
+
+                }
+
+            }
+
+        };
+
+
+    recognition.onerror =
+        function(event) {
+
+            console.log(
+                "Speech error:",
+                event.error
+            );
+
+        };
+
+
+    recognition.onend =
+        function() {
+
+            if (button) {
+
+                button.innerText =
+                    "🎤 Start Speaking";
+
+            }
+
+        };
+
 
     recognition.start();
+
 }
 
 let timeLeft = 60;
 
-const timer = document.getElementById("timer");
+const timer =
+    document.getElementById("timer");
+
 
 if (timer) {
-    timer.innerText = timeLeft;
 
-    const countdown = setInterval(function () {
-        timeLeft--;
+    timer.innerText =
+        timeLeft;
 
-        timer.innerText = timeLeft;
 
-        if (timeLeft <= 0) {
-            clearInterval(countdown);
+    const countdown =
+        setInterval(
+            function() {
 
-            const form = document.querySelector("form");
+                timeLeft--;
 
-            if (form) {
-                form.submit();
-            }
-        }
-    }, 1000);
+                timer.innerText =
+                    timeLeft;
+
+
+                if (timeLeft <= 0) {
+
+                    clearInterval(
+                        countdown
+                    );
+
+
+                    const form =
+                        document.getElementById(
+                            "answer-form"
+                        );
+
+
+                    if (form) {
+
+                        const answer =
+                            document.getElementById(
+                                "answer"
+                            );
+
+
+                        // Prevent empty answer
+                        // from blocking submission.
+
+                        if (
+                            answer &&
+                            answer.value.trim() === ""
+                        ) {
+
+                            answer.value =
+                                "No answer provided.";
+
+                        }
+
+
+                        form.submit();
+
+                    }
+
+                }
+
+            },
+            1000
+        );
+
 }
