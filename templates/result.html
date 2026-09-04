@@ -1,43 +1,249 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html>
-    <head>
-        <title>Interview Result</title>
 
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='style.css') }}"
-        />
-    </head>
+<head>
 
-    <body>
-        <div class="container">
-            <div class="result-card">
-                <h1>Interview Completed 🎉</h1>
+    <title>Interview Report</title>
 
-                <p>Thank you, {{ name }}</p>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 
-                <div class="score">{{ score }}%</div>
+</head>
 
-                <h2>Interview Score</h2>
+<body>
 
-                <hr />
 
-                <h2>Total Answers Submitted: {{ answers|length }}</h2>
+<div class="report-container">
 
-                {% for answer in answers %}
 
-                <div class="answer-result">
-                    <h3>Answer {{ loop.index }}</h3>
+    <div class="report-header">
 
-                    <p>{{ answer }}</p>
-                </div>
+        <h1>
+            🎉 Interview Completed
+        </h1>
+
+        <p>
+            Candidate: <strong>{{ name }}</strong>
+        </p>
+
+        <p>
+            Role: <strong>{{ role }}</strong>
+        </p>
+
+    </div>
+
+
+
+    <!-- OVERALL SCORE -->
+
+    <div class="overall-card">
+
+        <p>
+            Overall Interview Score
+        </p>
+
+        <div class="big-score">
+
+            {{ overall_score }}%
+
+        </div>
+
+
+        {% if overall_score >= 80 %}
+
+            <h2>
+                Excellent Performance 🌟
+            </h2>
+
+        {% elif overall_score >= 60 %}
+
+            <h2>
+                Good Performance 👍
+            </h2>
+
+        {% elif overall_score >= 40 %}
+
+            <h2>
+                Average Performance
+            </h2>
+
+        {% else %}
+
+            <h2>
+                Needs Improvement 💪
+            </h2>
+
+        {% endif %}
+
+    </div>
+
+
+
+    <!-- STRENGTHS / WEAKNESSES -->
+
+    <div class="summary-grid">
+
+
+        <div class="summary-card">
+
+            <h2>
+                💪 Strengths
+            </h2>
+
+            <ul>
+
+                {% for item in strengths %}
+
+                <li>
+                    {{ item }}
+                </li>
 
                 {% endfor %}
 
-                <a href="/">
-                    <button>Start New Interview</button>
-                </a>
-            </div>
+            </ul>
+
         </div>
-    </body>
+
+
+        <div class="summary-card">
+
+            <h2>
+                ⚠️ Weaknesses
+            </h2>
+
+            <ul>
+
+                {% for item in weaknesses %}
+
+                <li>
+                    {{ item }}
+                </li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- FINAL FEEDBACK -->
+
+    <div class="feedback-card">
+
+        <h2>
+            🤖 AI Final Feedback
+        </h2>
+
+        <p>
+            {{ final_feedback }}
+        </p>
+
+    </div>
+
+
+
+    <!-- QUESTION RESULTS -->
+
+    <h2 class="section-title">
+        Question-wise Evaluation
+    </h2>
+
+
+    {% for item in results %}
+
+    <div class="result-question">
+
+
+        <div class="question-heading">
+
+            <span>
+                Question {{ loop.index }}
+            </span>
+
+            <span class="badge">
+                {{ item.type }}
+            </span>
+
+            <span class="question-score">
+                {{ item.score }}/10
+            </span>
+
+        </div>
+
+
+        <h3>
+            {{ item.question }}
+        </h3>
+
+
+        <div class="candidate-answer">
+
+            <strong>
+                Your Answer:
+            </strong>
+
+            <p>
+                {{ item.answer }}
+            </p>
+
+        </div>
+
+
+        <div class="ai-feedback">
+
+            <strong>
+                AI Feedback:
+            </strong>
+
+            <p>
+                {{ item.feedback }}
+            </p>
+
+        </div>
+
+
+        <div class="improvement">
+
+            <strong>
+                💡 Improvement:
+            </strong>
+
+            <p>
+                {{ item.improvement }}
+            </p>
+
+        </div>
+
+
+    </div>
+
+    {% endfor %}
+
+
+
+    <div class="new-interview">
+
+        <a href="/">
+
+            <button>
+                🔄 Start New Interview
+            </button>
+
+        </a>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
 </html>
