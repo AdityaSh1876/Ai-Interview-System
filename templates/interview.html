@@ -1,63 +1,200 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html>
-    <head>
-        <title>Interview</title>
 
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='style.css') }}"
-        />
-    </head>
+<head>
 
-    <body>
-        <div class="interview-container">
-            <h1>Welcome, {{ name }} 👋</h1>
+    <title>AI Interview</title>
 
-            <div class="interview-grid">
-                <div class="question-card">
-                    <p>Question {{ q + 1 }} / {{ total }}</p>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
 
-                    <div class="progress">
-                        <div
-                            class="progress-bar"
-                            style="width: {{ ((q + 1) / total) * 100 }}%;"
-                        ></div>
-                    </div>
+</head>
 
-                    <h2>{{ question }}</h2>
+<body>
 
-                    <div id="timer">60</div>
 
-                    <form action="/submit" method="POST">
-                        <input type="hidden" name="q" value="{{ q }}" />
+<div class="interview-container">
 
-                        <textarea
-                            id="answer"
-                            name="answer"
-                            placeholder="Type your answer or use voice..."
-                            required
-                        ></textarea>
 
-                        <div class="buttons">
-                            <button type="button" onclick="startVoice()">
-                                🎤 Speak
-                            </button>
+    <div class="top-bar">
 
-                            <button type="submit">Next Question →</button>
-                        </div>
-                    </form>
-                </div>
+        <div>
 
-                <div class="camera-card">
-                    <h2>🎥 Camera</h2>
+            <h1>
+                AI Interview 🤖
+            </h1>
 
-                    <video id="video" autoplay playsinline></video>
+            <p>
+                Candidate: {{ name }}
+            </p>
 
-                    <p id="camera-status">Camera starting...</p>
-                </div>
-            </div>
+            <p>
+                Role: {{ role }}
+            </p>
+
         </div>
 
-        <script src="{{ url_for('static', filename='script.js') }}"></script>
-    </body>
+
+        <div class="timer-box">
+
+            ⏱️
+
+            <span id="timer">
+                60
+            </span>
+
+            sec
+
+        </div>
+
+    </div>
+
+
+
+    <div class="progress-info">
+
+        Question
+        {{ q + 1 }}
+        /
+        {{ total }}
+
+    </div>
+
+
+    <div class="progress">
+
+        <div
+            class="progress-bar"
+            style="width: {{ ((q + 1) / total) * 100 }}%;">
+        </div>
+
+    </div>
+
+
+
+    <div class="interview-grid">
+
+
+        <!-- QUESTION -->
+
+        <div class="question-card">
+
+
+            <span class="question-type">
+
+                {{ question_type }}
+
+            </span>
+
+
+            <h2>
+
+                {{ question }}
+
+            </h2>
+
+
+            <form
+                action="/submit"
+                method="POST"
+                id="answer-form"
+            >
+
+
+                <input
+                    type="hidden"
+                    name="q"
+                    value="{{ q }}"
+                >
+
+
+                <textarea
+                    id="answer"
+                    name="answer"
+                    placeholder="Type your answer here..."
+                    required
+                ></textarea>
+
+
+                <div class="buttons">
+
+
+                    <button
+                        type="button"
+                        onclick="startVoice()"
+                        id="voice-button"
+                    >
+                        🎤 Start Speaking
+                    </button>
+
+
+                    <button
+                        type="submit"
+                    >
+                        {% if q + 1 == total %}
+                            Finish Interview
+                        {% else %}
+                            Next Question →
+                        {% endif %}
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+
+        <!-- CAMERA -->
+
+        <div class="camera-card">
+
+
+            <h2>
+                🎥 Interview Camera
+            </h2>
+
+
+            <video
+                id="video"
+                autoplay
+                playsinline
+            ></video>
+
+
+            <p id="camera-status">
+                Starting camera...
+            </p>
+
+
+            <div class="camera-note">
+
+                Camera preview is used for
+                interview practice.
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script
+    src="{{ url_for('static', filename='script.js') }}"
+></script>
+
+
+</body>
+
 </html>
