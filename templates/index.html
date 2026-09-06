@@ -1,110 +1,196 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-
-    <title>AI Interview System</title>
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
-    >
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Interview System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+<body class="page">
 
-<body>
+<header class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark" aria-hidden="true">◆</span>
+      <span class="brand-name">AI Interview</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#top">Home</a>
+      <a href="#how-it-works">How it Works</a>
+      <a href="#features">Features</a>
+    </nav>
+  </div>
+</header>
 
-<div class="container">
+<main>
 
-    <div class="card">
-
-        <h1>🤖 AI Interview System</h1>
-
-        <p>
-            Practice interviews with AI-powered evaluation.
+  <section class="hero" id="top">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="hero-kicker">AI-powered interview practice</p>
+        <h1 class="hero-title">
+          Your AI-powered
+          <span class="hero-underline">
+            interview practice partner
+            <svg viewBox="0 0 200 10" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M2 7 C 50 2, 150 2, 198 7" stroke="#4fd1c5" stroke-width="3" fill="none" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </h1>
+        <p class="hero-subtitle">
+          Upload your resume, answer HR and technical questions tailored to your role, and walk away with a scored performance report — before the real interview ever happens.
         </p>
+        <div class="hero-actions">
+          <a href="#start" class="btn btn-primary">Start AI Interview →</a>
+          <a href="#how-it-works" class="btn btn-ghost">See how it works</a>
+        </div>
+      </div>
 
-
-        <form
-            action="/start"
-            method="POST"
-            enctype="multipart/form-data"
-        >
-
-
-            <label>
-                Candidate Name
-            </label>
-
-            <input
-                type="text"
-                name="name"
-                placeholder="Enter your name"
-                required
-            >
-
-
-            <label>
-                Job Role
-            </label>
-
-            <input
-                type="text"
-                name="role"
-                placeholder="Example: Python Developer"
-                value="Software Developer"
-                required
-            >
-
-
-            <label>
-                Experience
-            </label>
-
-            <select name="experience">
-
-                <option value="Fresher">
-                    Fresher
-                </option>
-
-                <option value="0-1 year">
-                    0-1 year
-                </option>
-
-                <option value="1-3 years">
-                    1-3 years
-                </option>
-
-                <option value="3+ years">
-                    3+ years
-                </option>
-
-            </select>
-
-
-            <label>
-                Resume PDF
-            </label>
-
-            <input
-                type="file"
-                name="resume"
-                accept=".pdf"
-            >
-
-
-            <button type="submit">
-                Start AI Interview 🚀
-            </button>
-
-
-        </form>
-
+      <div class="hero-visual" aria-hidden="true">
+        <svg viewBox="0 0 420 360" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#6f93ff"/>
+              <stop offset="100%" stop-color="#4fd1c5"/>
+            </linearGradient>
+          </defs>
+          <rect x="20" y="40" width="270" height="180" rx="20" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.18)"/>
+          <circle cx="58" cy="78" r="10" fill="#6f93ff"/>
+          <rect x="80" y="71" width="120" height="8" rx="4" fill="rgba(255,255,255,0.5)"/>
+          <rect x="40" y="108" width="230" height="10" rx="5" fill="rgba(255,255,255,0.25)"/>
+          <rect x="40" y="128" width="190" height="10" rx="5" fill="rgba(255,255,255,0.18)"/>
+          <rect x="40" y="148" width="210" height="10" rx="5" fill="rgba(255,255,255,0.18)"/>
+          <g transform="translate(40,175)">
+            <rect x="0" y="10" width="6" height="16" rx="3" fill="#4fd1c5"/>
+            <rect x="12" y="4" width="6" height="28" rx="3" fill="#4fd1c5"/>
+            <rect x="24" y="0" width="6" height="36" rx="3" fill="#4fd1c5"/>
+            <rect x="36" y="8" width="6" height="20" rx="3" fill="#4fd1c5"/>
+            <rect x="48" y="2" width="6" height="32" rx="3" fill="#4fd1c5"/>
+            <rect x="60" y="10" width="6" height="16" rx="3" fill="#4fd1c5"/>
+          </g>
+          <g transform="translate(300,250)">
+            <circle r="66" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="11"/>
+            <circle r="66" fill="none" stroke="url(#ringGrad)" stroke-width="11" stroke-linecap="round"
+              stroke-dasharray="414" stroke-dashoffset="90" transform="rotate(-90)"/>
+            <text x="0" y="8" text-anchor="middle" fill="#eef2ff" font-size="26" font-weight="700" font-family="Space Grotesk, sans-serif">86%</text>
+          </g>
+        </svg>
+      </div>
     </div>
+  </section>
 
-</div>
+  <section class="how-it-works" id="how-it-works">
+    <div class="section-inner">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li>
+          <span class="step-index">1</span>
+          <div>
+            <h3>Share your details</h3>
+            <p>Tell us your name, target role, experience level, and upload your resume.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-index">2</span>
+          <div>
+            <h3>Answer AI questions</h3>
+            <p>Respond to HR and technical questions by typing or speaking, against a 60-second timer.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-index">3</span>
+          <div>
+            <h3>Get your report</h3>
+            <p>Receive a scored breakdown with strengths, weaknesses, and detailed AI feedback.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
 
+  <section class="features" id="features">
+    <div class="section-inner">
+      <h2>Everything you need to prepare</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon" aria-hidden="true">✦</div>
+          <h3>AI generated questions</h3>
+          <p>A fresh mix of HR and technical questions built around your target role.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" aria-hidden="true">📄</div>
+          <h3>Resume based interview</h3>
+          <p>Upload your resume so questions reflect your real projects and experience.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" aria-hidden="true">⚡</div>
+          <h3>Real-time evaluation</h3>
+          <p>Every answer is scored as you go, by voice or by typing.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon" aria-hidden="true">📊</div>
+          <h3>Detailed performance report</h3>
+          <p>Get an overall score, strengths, weaknesses, and question-by-question feedback.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="start-section" id="start">
+    <div class="start-card">
+      <div class="start-card-head">
+        <h2>Start your practice interview</h2>
+        <p>Takes about 10 minutes. Your resume is only used to tailor your questions.</p>
+      </div>
+
+      <form action="/start" method="POST" enctype="multipart/form-data" class="start-form">
+
+        <div class="field">
+          <label for="name-input">Candidate Name</label>
+          <input type="text" id="name-input" name="name" placeholder="Enter your name" required>
+        </div>
+
+        <div class="field">
+          <label for="role-input">Job Role</label>
+          <input type="text" id="role-input" name="role" placeholder="Example: Python Developer" value="Software Developer" required>
+        </div>
+
+        <div class="field">
+          <label for="experience-input">Experience</label>
+          <select id="experience-input" name="experience">
+            <option value="Fresher">Fresher</option>
+            <option value="0-1 year">0-1 year</option>
+            <option value="1-3 years">1-3 years</option>
+            <option value="3+ years">3+ years</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="resume-input">Resume PDF</label>
+          <div class="upload-zone" id="upload-zone">
+            <input type="file" id="resume-input" name="resume" accept=".pdf" class="upload-input">
+            <label for="resume-input" class="upload-label">
+              <span class="upload-icon" aria-hidden="true">⤒</span>
+              <span class="upload-text">Drag &amp; drop your resume, or <span class="upload-browse">browse</span></span>
+              <span class="upload-filename" id="resume-filename">No file selected</span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Start AI Interview →</button>
+
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>AI Interview System — practice smarter, interview stronger.</p>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
-
 </html>
