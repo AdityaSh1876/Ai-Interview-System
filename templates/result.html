@@ -1,249 +1,248 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Interview Report</title>
+  <title>AI Interview — Results</title>
 
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
-    >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
-<body>
+<body class="page report-page">
+
+<header class="dash-header report-header-bar">
+  <div class="dash-header-inner">
+
+    <a class="brand" href="/">
+      <span class="brand-mark">◆</span>
+      <span class="brand-name">AI Interview</span>
+    </a>
+
+  </div>
+</header>
+
+<main class="report-container">
+
+  <section class="report-header">
+
+    <div>
+      <p class="report-kicker">AI Interview Report</p>
+
+      <h1>Interview Completed</h1>
+
+      <p class="report-candidate">
+        Candidate:
+        <strong>{{ name }}</strong>
+      </p>
+
+      <p class="report-candidate">
+        Role:
+        <strong>{{ role }}</strong>
+      </p>
+    </div>
+
+    <a href="/" class="btn btn-primary">
+      New Interview →
+    </a>
+
+  </section>
 
 
-<div class="report-container">
+  <section class="overall-card">
 
+    <div class="overall-score">
 
-    <div class="report-header">
+      <p class="overall-label">
+        Overall Interview Score
+      </p>
 
-        <h1>
-            🎉 Interview Completed
-        </h1>
+      <div
+        class="score-ring"
+        style="background: conic-gradient(var(--primary) {{ overall_score * 3.6 }}deg, var(--line) 0deg);">
 
-        <p>
-            Candidate: <strong>{{ name }}</strong>
-        </p>
+        <div class="score-ring-inner">
+          <span class="score-value">
+            {{ overall_score }}%
+          </span>
 
-        <p>
-            Role: <strong>{{ role }}</strong>
-        </p>
+          <span class="score-caption">
+            Overall
+          </span>
+        </div>
+
+      </div>
 
     </div>
 
 
+    <div class="overall-summary">
 
-    <!-- OVERALL SCORE -->
+      <div class="summary-block">
 
-    <div class="overall-card">
+        <h3>Strengths</h3>
 
-        <p>
-            Overall Interview Score
-        </p>
-
-        <div class="big-score">
-
-            {{ overall_score }}%
-
-        </div>
-
-
-        {% if overall_score >= 80 %}
-
-            <h2>
-                Excellent Performance 🌟
-            </h2>
-
-        {% elif overall_score >= 60 %}
-
-            <h2>
-                Good Performance 👍
-            </h2>
-
-        {% elif overall_score >= 40 %}
-
-            <h2>
-                Average Performance
-            </h2>
-
+        {% if strengths %}
+        <ul>
+          {% for item in strengths %}
+          <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
         {% else %}
-
-            <h2>
-                Needs Improvement 💪
-            </h2>
-
+        <p>No strengths recorded.</p>
         {% endif %}
 
-    </div>
+      </div>
 
 
+      <div class="summary-block">
 
-    <!-- STRENGTHS / WEAKNESSES -->
+        <h3>Areas to improve</h3>
 
-    <div class="summary-grid">
+        {% if weaknesses %}
+        <ul>
+          {% for item in weaknesses %}
+          <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        <p>No improvement areas recorded.</p>
+        {% endif %}
 
-
-        <div class="summary-card">
-
-            <h2>
-                💪 Strengths
-            </h2>
-
-            <ul>
-
-                {% for item in strengths %}
-
-                <li>
-                    {{ item }}
-                </li>
-
-                {% endfor %}
-
-            </ul>
-
-        </div>
-
-
-        <div class="summary-card">
-
-            <h2>
-                ⚠️ Weaknesses
-            </h2>
-
-            <ul>
-
-                {% for item in weaknesses %}
-
-                <li>
-                    {{ item }}
-                </li>
-
-                {% endfor %}
-
-            </ul>
-
-        </div>
-
+      </div>
 
     </div>
 
+  </section>
 
 
-    <!-- FINAL FEEDBACK -->
+  <section class="feedback-card">
 
-    <div class="feedback-card">
-
-        <h2>
-            🤖 AI Final Feedback
-        </h2>
-
-        <p>
-            {{ final_feedback }}
-        </p>
-
+    <div class="section-heading">
+      <p class="section-kicker">AI feedback</p>
+      <h2>Final Interview Feedback</h2>
     </div>
 
+    <p class="final-feedback">
+      {{ final_feedback }}
+    </p>
+
+  </section>
 
 
-    <!-- QUESTION RESULTS -->
+  <section class="question-results">
 
-    <h2 class="section-title">
-        Question-wise Evaluation
-    </h2>
+    <div class="section-heading">
+      <p class="section-kicker">Performance breakdown</p>
+      <h2>Question-by-question results</h2>
+    </div>
 
 
     {% for item in results %}
 
-    <div class="result-question">
+    <article class="result-question">
+
+      <div class="result-question-head">
+
+        <div>
+
+          <span class="result-question-number">
+            Question {{ loop.index }}
+          </span>
+
+          <span class="result-question-type">
+            {{ item.type }}
+          </span>
+
+        </div>
+
+        <div class="result-score">
+          {{ item.score }}/10
+        </div>
+
+      </div>
 
 
-        <div class="question-heading">
+      <h3 class="result-question-title">
+        {{ item.question }}
+      </h3>
 
-            <span>
-                Question {{ loop.index }}
-            </span>
 
-            <span class="badge">
-                {{ item.type }}
-            </span>
+      <div class="result-answer">
 
-            <span class="question-score">
-                {{ item.score }}/10
-            </span>
+        <span class="result-label">
+          Your answer
+        </span>
+
+        {% if item.answer %}
+        <p>{{ item.answer }}</p>
+        {% else %}
+        <p class="empty-answer">
+          No answer provided.
+        </p>
+        {% endif %}
+
+      </div>
+
+
+      <div class="result-feedback-grid">
+
+        <div class="result-feedback">
+
+          <span class="result-label">
+            AI Feedback
+          </span>
+
+          <p>
+            {{ item.feedback }}
+          </p>
 
         </div>
 
 
-        <h3>
-            {{ item.question }}
-        </h3>
+        <div class="result-feedback">
 
+          <span class="result-label">
+            How to improve
+          </span>
 
-        <div class="candidate-answer">
-
-            <strong>
-                Your Answer:
-            </strong>
-
-            <p>
-                {{ item.answer }}
-            </p>
+          <p>
+            {{ item.improvement }}
+          </p>
 
         </div>
 
+      </div>
 
-        <div class="ai-feedback">
-
-            <strong>
-                AI Feedback:
-            </strong>
-
-            <p>
-                {{ item.feedback }}
-            </p>
-
-        </div>
-
-
-        <div class="improvement">
-
-            <strong>
-                💡 Improvement:
-            </strong>
-
-            <p>
-                {{ item.improvement }}
-            </p>
-
-        </div>
-
-
-    </div>
+    </article>
 
     {% endfor %}
 
+  </section>
 
 
-    <div class="new-interview">
+  <section class="report-footer">
 
-        <a href="/">
+    <a href="/" class="btn btn-primary">
+      Practice Again →
+    </a>
 
-            <button>
-                🔄 Start New Interview
-            </button>
+  </section>
 
-        </a>
-
-    </div>
+</main>
 
 
-</div>
+<footer class="site-footer">
+  <p>
+    AI Interview System — practice smarter, interview stronger.
+  </p>
+</footer>
 
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
-
 </html>
